@@ -109,6 +109,11 @@
     <Compile Include="Authorization\PlainTextAccountService.cs" />
     <Compile Include="Authorization\PlainTextGroup.cs" />
     <Compile Include="Authorization\PlainTextUserAccount.cs" />
+    <Compile Include="Commands\CommandContext.cs" />
+    <Compile Include="Commands\CommandHandlerDelegate.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandPipelineService.cs" />
+    <Compile Include="Commands\IParameter.cs" />
     <Compile Include="Configuration\YamlFileConfigurationService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Framework\IService.cs" />
