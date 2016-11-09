@@ -114,6 +114,7 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandPipelineService.cs" />
     <Compile Include="Commands\IParameter.cs" />
+    <Compile Include="Commands\ParameterType.cs" />
     <Compile Include="Configuration\YamlFileConfigurationService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Framework\IService.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Orion.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Orion.Commands
 	/// Command pipeline service is a shared component which contains the entire list of commands, and
 	/// facilitates the add/removal of ICommand instances from various command services in Orion.
 	/// </summary>
-	public interface ICommandPipelineService
+	public interface ICommandPipelineService : ISharedService
 	{
 
 		/// <summary>
