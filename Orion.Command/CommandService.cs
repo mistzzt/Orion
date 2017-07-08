@@ -20,13 +20,15 @@ namespace Orion.Command
 	/// parse, and execute commands.
 	/// </summary>
 	[Service("Headquarters Based Command Service", Author = "Nyx Studios")]
-	public class CommandService : SharedService
+	public class HQCommandService : SharedService, ICommandService
 	{
 		private readonly CommandRegistry _commandRegistry;
 		private readonly INetworkService _networkService;
 		private readonly IPlayerService _playerService;
 
-		public CommandService
+		/// <summary>
+		/// Constructs a new instance of <see cref="HQCommandService"/>
+		public HQCommandService
 			(
 			Orion orion, 
 			JsonFileConfigurationService<RegistrySettings> configuration,
@@ -40,24 +42,36 @@ namespace Orion.Command
 			_commandRegistry = new CommandRegistry(settings);
 		}
 
+		/// </inheritdoc>
 		public void RegisterCommand(Type commandType)
 		{
 			_commandRegistry.AddCommand(commandType);
 		}
 
+		/// <summary>
+		/// Registers the chat-packet listener with the network service.
+		/// </summary>
 		private void RegisterChatListener()
 		{
 			_networkService.ReceivedPacket += HandlePacket;
 		}
 
-		private ContextObject BuildContextObject(string name)
+		/// <summary>
+		/// Constructs a context for use within a command execution.
+		/// </summary>
+		/// <param name="playerName">Player name who executed the command.</param>
+		private ContextObject BuildContextObject(string playerName)
 		{
 			var context = new ContextObject(_commandRegistry);
-			IPlayer player = _playerService.FindPlayers(x => x.WrappedPlayer.name == name).Single();
+			IPlayer player = _playerService.FindPlayers(x => x.WrappedPlayer.name == playerName).Single();
 			context.Store<IPlayer>(player);
 			return context;
 		}
 
+		/// <summary>
+		/// Read a received packet and determine if it is a NetTextModule which represents
+		/// all chat communication.
+		/// </summary>
 		private void HandlePacket(object sender, ReceivedPacketEventArgs e)
 		{
 			if (e.Packet.PacketType == PacketTypes.LoadNetModule)
