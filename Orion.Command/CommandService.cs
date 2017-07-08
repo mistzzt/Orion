@@ -100,5 +100,10 @@ namespace Orion.Command
 				}
 			}
 		}
+
+		public void HandleInput(string input, Player player)
+		{
+			_commandRegistry.HandleInput(input, BuildContextObject(player.Name), null);
+		}
 	}
 }

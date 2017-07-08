@@ -1,4 +1,5 @@
 ﻿using System;
+using Orion.Players;
 
 namespace Orion.Command
 {
@@ -10,7 +11,13 @@ namespace Orion.Command
 		/// <summary>
 		/// Register a command to the service.
 		/// </summary>
-		/// <param name="commandType"></param>
 		void RegisterCommand(Type commandType);
+
+		/// <summary>
+		/// Handles the provided text as command input.
+		/// </summary>
+		/// <param name="input">Text input.</param>
+		/// <param name="caller">Calling player</param>
+		void HandleInput(string input, Player caller);
 	}
 }
