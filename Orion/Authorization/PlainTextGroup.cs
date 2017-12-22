@@ -137,6 +137,7 @@ namespace Orion.Authorization
 			throw new System.NotImplementedException();
 		}
 
+		/// <inheritdoc />
 		public async Task<bool> HasMemberAsync(IAccount userAccount)
 		{
 			throw new System.NotImplementedException();

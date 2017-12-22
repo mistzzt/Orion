@@ -7,8 +7,10 @@ using Microsoft.Xna.Framework;
 
 namespace Orion.Entities
 {
+	/// <inheritdoc />
 	public class OrionEntity : IOrionEntity
 	{
+		/// <inheritdoc />
 		public int Height
 		{
 			get { return WrappedEntity.height; }

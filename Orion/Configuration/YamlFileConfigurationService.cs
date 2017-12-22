@@ -14,6 +14,7 @@ namespace Orion.Configuration
 	{
 		private string _configDirectory => Path.Combine(ConfigurationRootDirectory, typeof(TConfig).Name);
 		private string _configFile => Path.Combine(_configDirectory, "config.yaml");
+		private SerializerBuilder serializerBuilder => new SerializerBuilder();
 
 		/// <summary>
 		/// Gets the configuration root directory, relative to Orion's working path.
@@ -30,6 +31,7 @@ namespace Orion.Configuration
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public YamlFileConfigurationService(Orion orion) : base(orion)
 		{
+			serializerBuilder.EmitDefaults();
 			Directory.CreateDirectory(_configDirectory);
 			Load();
 		}
@@ -81,7 +83,7 @@ namespace Orion.Configuration
 		/// <inheritdoc />
 		public void Save(Stream stream)
 		{
-			var serializer = new Serializer(SerializationOptions.EmitDefaults);
+			var serializer = serializerBuilder.Build();
 
 			using (var sw = new StreamWriter(stream))
 			{
