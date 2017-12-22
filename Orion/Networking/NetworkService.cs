@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.Net.Sockets;
 using System.IO;
+using OTAPI.Sockets;
 
 namespace Orion.Networking
 {
@@ -39,11 +40,12 @@ namespace Orion.Networking
 			if (ReceivingPacket == null)
 				return HookResult.Continue;
 
-			// Make a copy of the data since I don't actually want to edit the data.
-			byte[] dataCopy = buffer.readBuffer.Skip(start).Take(length).ToArray();
-			TerrariaPacket resultPacket;
+			// ArraySegments aren't data copies. I initially made a copy of the readBuffer but realized
+			// that was stupid since I wasn't editing the original data.
+			ArraySegment<byte> dataSegment = new ArraySegment<byte>(buffer.readBuffer, start, length);
 
-			using (var ms = new MemoryStream(dataCopy))
+			TerrariaPacket resultPacket;
+			using (var ms = new MemoryStream(dataSegment.Array))
 			using (var br = new BinaryReader(ms))
 			{
 				resultPacket = TerrariaPacket.Deserialize(br);
@@ -59,13 +61,34 @@ namespace Orion.Networking
 		/// <inheritdoc/>
 		public void SendPacket(int target, TerrariaPacket packet)
 		{
-			throw new NotImplementedException();
+			ISocket clientSocket = Netplay.Clients[target]?.Socket;
+			byte[] payload = packet.ToArray();
+
+			//  TODO: Determine if an exception is more appropriate here
+			if (clientSocket == null)
+			{
+				return;
+			}
+
+			clientSocket.AsyncSend(payload, 0, payload.Length, null);
 		}
 
 		/// <inheritdoc/>
 		public void BroadcastPacket(TerrariaPacket packet)
 		{
-			throw new NotImplementedException();
+			byte[] payload = packet.ToArray();
+
+			foreach (RemoteClient client in Netplay.Clients)
+			{
+				ISocket clientSocket = client?.Socket;
+
+				if (clientSocket == null)
+				{
+					continue;
+				}
+
+				clientSocket.AsyncSend(payload, 0, payload.Length, null);
+			}
 		}
 	}
 }
