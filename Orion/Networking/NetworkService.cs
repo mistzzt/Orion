@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Multiplicity.Packets;
 using Orion.Networking.Events;
 using OTAPI;
 using Terraria;
-using Terraria.Localization;
 using Terraria.Net.Sockets;
 using System.IO;
-using OTAPI.Sockets;
 
 namespace Orion.Networking
 {
