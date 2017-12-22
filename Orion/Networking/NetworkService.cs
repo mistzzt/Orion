@@ -5,10 +5,12 @@ using OTAPI;
 using Terraria;
 using Terraria.Net.Sockets;
 using System.IO;
+using Orion.Framework;
 
 namespace Orion.Networking
 {
 	/// <inheritdoc/>
+	[Service("Network Service", Author = "Nyx Studios")]
 	public class NetworkService : INetworkService
 	{
 		/// <inheritdoc/>

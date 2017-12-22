@@ -1,13 +1,14 @@
 ﻿using System;
 using Multiplicity.Packets;
 using Orion.Networking.Events;
+using Orion.Framework;
 
 namespace Orion.Networking
 {
 	/// <summary>
 	/// Provides a mechanism for managing the network.
 	/// </summary>
-	public interface INetworkService
+	public interface INetworkService : ISharedService
 	{
 		/// <summary>
 		/// Occurs when a packet was received.
