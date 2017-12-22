@@ -22,8 +22,14 @@ namespace Orion.Networking
 		/// <summary>
 		/// Sends the specified packet to the target.
 		/// </summary>
-		/// <param name="target">The target. <c>-1</c> represents everyone.</param>
-		/// <param name="packet">The packet.</param>
+		/// <param name="target">The target player id.</param>
+		/// <param name="packet">The packet to send to the targeted player.</param>
 		void SendPacket(int target, TerrariaPacket packet);
+
+		/// <summary>
+		/// Sends the specified packet to all players.
+		/// </summary>
+		/// <param name="packet">The packet to send to all players.</param>
+		void BroadcastPacket(TerrariaPacket packet);
 	}
 }
