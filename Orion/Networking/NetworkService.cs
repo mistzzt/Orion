@@ -36,12 +36,8 @@ namespace Orion.Networking
 			if (ReceivingPacket == null)
 				return HookResult.Continue;
 
-			// ArraySegments aren't data copies. I initially made a copy of the readBuffer but realized
-			// that was stupid since I wasn't editing the original data.
-			ArraySegment<byte> dataSegment = new ArraySegment<byte>(buffer.readBuffer, start, length);
-
 			TerrariaPacket resultPacket;
-			using (var ms = new MemoryStream(dataSegment.Array))
+			using (var ms = new MemoryStream(buffer.readBuffer))
 			using (var br = new BinaryReader(ms))
 			{
 				resultPacket = TerrariaPacket.Deserialize(br);
