@@ -11,7 +11,7 @@ namespace Orion.Networking
 {
 	/// <inheritdoc/>
 	[Service("Network Service", Author = "Nyx Studios")]
-	public class NetworkService : INetworkService
+	public class NetworkService : SharedService, INetworkService
 	{
 		/// <inheritdoc/>
 		public event EventHandler<ReceivedPacketEventArgs> ReceivedPacket;
@@ -22,7 +22,7 @@ namespace Orion.Networking
 		/// <summary>
 		/// Constructs the NetworkService and registers OTAPI hooks.
 		/// </summary>
-		public NetworkService()
+		public NetworkService(Orion orion) : base(orion)
 		{
 			Hooks.Net.ReceiveData += HandleReceiveData;
 		}
